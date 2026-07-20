@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<!-- Staging deployment is managed from GitHub's dev branch. -->
+<!-- Automatic staging deployment verified through GitHub dev. -->
 
 <main>
     <section class="hero">
