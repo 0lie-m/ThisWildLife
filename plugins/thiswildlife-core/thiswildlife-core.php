@@ -2,14 +2,19 @@
 /**
  * Plugin Name: This Wild Life Core
  * Description: Provides Book management and core functionality for This Wild Life.
-
+ * Version: 1.2.0
+ * Author: This Wild Life
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
-require_once plugin_dir_path(__FILE__) . 'includes/book-fields.php';
+/*
+ * Load the additional Book fields and secure saving logic.
+ */
+require_once plugin_dir_path(__FILE__) .
+    'includes/book-fields.php';
 
 /**
  * Register the Book custom post type.
@@ -53,7 +58,9 @@ function twl_register_book_post_type()
         'show_in_rest'    => true,
         'menu_icon'       => 'dashicons-book-alt',
         'has_archive'     => false,
-        'rewrite'         => ['slug' => 'book'],
+        'rewrite'         => [
+            'slug' => 'book',
+        ],
         'capabilities'    => $capabilities,
         'map_meta_cap'    => true,
         'supports'        => [
@@ -69,7 +76,21 @@ function twl_register_book_post_type()
 add_action('init', 'twl_register_book_post_type');
 
 /**
- * Primitive capabilities granted to Book Managers.
+ * Enable featured images for Book covers.
+ */
+function twl_enable_book_cover_support()
+{
+    add_theme_support('post-thumbnails');
+}
+
+add_action(
+    'after_setup_theme',
+    'twl_enable_book_cover_support',
+    20
+);
+
+/**
+ * Return the capabilities granted to the publishing role.
  */
 function twl_get_book_manager_capabilities()
 {
@@ -90,25 +111,28 @@ function twl_get_book_manager_capabilities()
 }
 
 /**
- * Create the Book Manager role and grant Book access to administrators.
+ * Create the publishing role and grant Book access to administrators.
  */
 function twl_activate_plugin()
 {
-    $book_manager = get_role('twl_book_manager');
+    $publisher = get_role('twl_book_manager');
 
-    if (!$book_manager) {
-        $book_manager = add_role(
+    if (!$publisher) {
+        $publisher = add_role(
             'twl_book_manager',
-            'Book Manager',
-            ['read' => true]
+            'This Wild Life Publisher',
+            [
+                'read' => true,
+            ]
         );
     }
 
-    $book_capabilities = twl_get_book_manager_capabilities();
+    $book_capabilities =
+        twl_get_book_manager_capabilities();
 
-    if ($book_manager) {
+    if ($publisher) {
         foreach ($book_capabilities as $capability) {
-            $book_manager->add_cap($capability);
+            $publisher->add_cap($capability);
         }
     }
 
@@ -124,14 +148,43 @@ function twl_activate_plugin()
     flush_rewrite_rules();
 }
 
+register_activation_hook(
+    __FILE__,
+    'twl_activate_plugin'
+);
+
 /**
- * Enable featured images for Book covers.
+ * Rename an existing Book Manager role without changing
+ * its internal role key or assigned permissions.
  */
-function twl_enable_book_cover_support()
+function twl_update_publisher_role_name()
 {
-    add_theme_support('post-thumbnails');
+    $roles = wp_roles();
+    $role_key = 'twl_book_manager';
+    $new_name = 'This Wild Life Publisher';
+
+    if (!isset($roles->roles[$role_key])) {
+        return;
+    }
+
+    if (
+        $roles->roles[$role_key]['name'] ===
+        $new_name
+    ) {
+        return;
+    }
+
+    $roles->roles[$role_key]['name'] = $new_name;
+    $roles->role_names[$role_key] = $new_name;
+
+    update_option(
+        $roles->role_key,
+        $roles->roles
+    );
 }
 
-add_action('after_setup_theme', 'twl_enable_book_cover_support', 20);
-
-register_activation_hook(__FILE__, 'twl_activate_plugin');
+add_action(
+    'init',
+    'twl_update_publisher_role_name',
+    5
+);
