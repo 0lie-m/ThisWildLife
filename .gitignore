@@ -1,0 +1,20 @@
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Zip backups
+*.zip
+
+# Environment files
+.env
+
+# WordPress config
+wp-config.php
