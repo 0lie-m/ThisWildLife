@@ -2,12 +2,14 @@
 /**
  * Plugin Name: This Wild Life Core
  * Description: Provides Book management and core functionality for This Wild Life.
- * Version: 1.0.0
+
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
+
+require_once plugin_dir_path(__FILE__) . 'includes/book-fields.php';
 
 /**
  * Register the Book custom post type.
