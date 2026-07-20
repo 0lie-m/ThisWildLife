@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<!-- Staging deployment is managed from GitHub's dev branch. -->
 
 <main>
     <section class="hero">
