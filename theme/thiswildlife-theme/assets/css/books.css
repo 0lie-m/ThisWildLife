@@ -503,6 +503,10 @@
   margin-top:8px;
 }
 
+.modal-actions [hidden]{
+  display:none !important;
+}
+
 /* PLACEHOLDER BACK COVER */
 .placeholder-back{
   width:100%;
