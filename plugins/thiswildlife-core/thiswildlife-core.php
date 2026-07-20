@@ -122,4 +122,14 @@ function twl_activate_plugin()
     flush_rewrite_rules();
 }
 
+/**
+ * Enable featured images for Book covers.
+ */
+function twl_enable_book_cover_support()
+{
+    add_theme_support('post-thumbnails');
+}
+
+add_action('after_setup_theme', 'twl_enable_book_cover_support', 20);
+
 register_activation_hook(__FILE__, 'twl_activate_plugin');
