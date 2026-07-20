@@ -9,3 +9,15 @@ The live WordPress theme was previously edited manually through Bluehost File Ma
 A new GitHub repository was created to make the WordPress implementation the authoritative version of the project. The project will use separate development and production branches, a Bluehost staging website and Git-based deployment.
 
 The initial live theme was backed up and copied into the repository without modification.
+
+## Milestone 1 - Git Repository and Branch Workflow
+
+A new GitHub repository was created for the WordPress version of the project.
+
+The repository was structured to separate the WordPress theme, future plugin development and project documentation.
+
+A development (`dev`) branch was introduced alongside the production (`main`) branch. The first pull request was successfully created and merged into `main`, establishing the version control workflow that will be used throughout the project.
+
+Future development will follow the workflow:
+
+Feature Development → dev → Pull Request → main → Production
