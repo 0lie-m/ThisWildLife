@@ -20,4 +20,4 @@ A development (`dev`) branch was introduced alongside the production (`main`) br
 
 Future development will follow the workflow:
 
-Feature Development → dev → Pull Request → main → Production
+Feature Development → dev → Pull Request → main → Production.
