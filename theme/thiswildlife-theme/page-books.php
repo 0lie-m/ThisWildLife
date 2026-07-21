@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<!-- Automatic staging deployment verified through GitHub dev. -->
 
 <main>
     <section class="hero">
