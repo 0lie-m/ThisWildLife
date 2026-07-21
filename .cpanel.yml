@@ -1,8 +1,4 @@
 ---
 deployment:
   tasks:
-    - export STAGINGPATH=$HOME/public_html/staging/9632/wp-content
-    - /bin/mkdir -p $STAGINGPATH/themes/thiswildlife-theme
-    - /bin/cp -R theme/thiswildlife-theme/. $STAGINGPATH/themes/thiswildlife-theme/
-    - /bin/mkdir -p $STAGINGPATH/plugins/thiswildlife-core
-    - /bin/cp -R plugins/thiswildlife-core/. $STAGINGPATH/plugins/thiswildlife-core/
+    - /bin/bash deployment/deploy-wordpress.sh
