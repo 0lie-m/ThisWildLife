@@ -16,6 +16,13 @@ if (!defined('ABSPATH')) {
 require_once plugin_dir_path(__FILE__) .
     'includes/book-fields.php';
 
+/*
+ * Load the public, read-only Books REST API.
+ */
+require_once plugin_dir_path(__FILE__) .
+    'includes/book-rest-api.php';
+
+    
 /**
  * Register the Book custom post type.
  */
