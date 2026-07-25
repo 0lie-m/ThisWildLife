@@ -80,6 +80,15 @@ function thiswildlife_scripts() {
     wp_enqueue_style('about-css', get_template_directory_uri() . '/assets/css/about.css');
     wp_enqueue_script('about-js', get_template_directory_uri() . '/assets/js/about.js', array(), null, true);
     }
+
+    if (is_page('contact')) {
+        wp_enqueue_style(
+            'contact-style',
+            get_template_directory_uri() . '/assets/css/contact.css',
+            array('shared-style'),
+            null
+        );
+    }
 }
 
 add_action('wp_enqueue_scripts', 'thiswildlife_scripts');
