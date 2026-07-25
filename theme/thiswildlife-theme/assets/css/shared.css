@@ -266,7 +266,7 @@ footer{
 
 .footer-grid{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr 1.2fr;
+  grid-template-columns:1.1fr 1fr 1fr 1.2fr;
   gap:40px;
 }
 
@@ -279,6 +279,7 @@ footer{
   justify-content:center;
   color:var(--accent);
   font-size:12px;
+  border-radius:6px;
   font-weight:600;
 }
 .footer-logo img{
@@ -286,6 +287,19 @@ footer{
   height:36px;
   object-fit:contain;
   display:block;
+}
+
+.footer-tagline{
+  max-width:210px;
+  margin:18px 0 0;
+  color:rgba(255,255,255,0.7);
+  font-size:14px;
+  line-height:1.7;
+}
+
+.footer-column p{
+  color:rgba(255,255,255,0.72);
+  line-height:1.7;
 }
 
 .footer-column h3{
@@ -307,29 +321,16 @@ footer{
   color:var(--accent);
 }
 
-.subscribe-box{
-  display:flex;
-  margin-bottom:20px;
-}
-
-.subscribe-box input{
-  flex:1;
-  padding:10px;
-  border:none;
-  outline:none;
-}
-
-.subscribe-box button{
-  padding:10px 16px;
-  border:none;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer;
-  transition:.2s ease;
-}
-
-.subscribe-box button:hover{
-  filter:brightness(.95);
+.footer-coming-soon{
+  display:inline-flex;
+  margin-top:8px;
+  padding:8px 12px;
+  border:1px solid rgba(182,122,60,0.55);
+  border-radius:999px;
+  color:var(--accent);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.04em;
 }
 
 .footer-bottom{

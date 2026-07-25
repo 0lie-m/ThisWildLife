@@ -3,10 +3,13 @@
     <div class="footer-top-line"></div>
 
     <div class="footer-grid">
-      <div>
+      <div class="footer-brand">
         <div class="footer-logo">
           <img src="<?php echo get_template_directory_uri(); ?>/assets/images/branding/logo.png" alt="This Wild Life logo">
         </div>
+        <p class="footer-tagline">
+          Children's stories inspired by Ireland's wildlife.
+        </p>
       </div>
 
       <div class="footer-column">
@@ -14,30 +17,25 @@
         <a href="<?php echo home_url('/'); ?>">Home</a>
         <a href="<?php echo home_url('/books/'); ?>">Books</a>
         <a href="<?php echo home_url('/discover/'); ?>">Discover</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>This Wild Life</h3>
+        <a href="<?php echo home_url('/about/'); ?>">About the Creator</a>
         <a href="<?php echo home_url('/contact/'); ?>">Contact</a>
       </div>
 
-      <div class="footer-column">
-        <h3>About</h3>
-        <a href="<?php echo home_url('/about/'); ?>">Our Journey</a>
-        <a href="<?php echo home_url('/about/'); ?>">FAQ</a>
-      </div>
-
-      <div class="footer-column">
-        <h3>Connect</h3>
-        <div class="subscribe-box">
-          <input type="email" placeholder="Email address">
-          <button type="button">Subscribe</button>
-        </div>
-        <a href="<?php echo home_url('/contact/'); ?>">Instagram</a>
-        <a href="<?php echo home_url('/contact/'); ?>">Facebook</a>
-        <a href="<?php echo home_url('/contact/'); ?>">Twitter</a>
-        <a href="<?php echo home_url('/books/'); ?>">Shop on Amazon</a>
+      <div class="footer-column footer-updates">
+        <h3>Newsletter</h3>
+        <p>
+          Book news, wildlife stories and new releases will be shared here.
+        </p>
+        <span class="footer-coming-soon">Coming soon</span>
       </div>
     </div>
 
     <div class="footer-bottom">
-      (c) 2026 This Wild Life - Designed in Ireland
+      &copy; <?php echo esc_html(wp_date('Y')); ?> This Wild Life &middot; Designed in Ireland
     </div>
   </div>
 </footer>
