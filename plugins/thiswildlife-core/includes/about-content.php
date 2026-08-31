@@ -134,6 +134,18 @@ function twl_register_about_content_setting()
 
 add_action(
     'admin_init',
+    /**
+ * Allow the Publisher role to save About Page settings.
+ */
+function twl_about_content_settings_capability()
+{
+    return 'edit_twl_books';
+}
+
+add_filter(
+    'option_page_capability_twl_about_content_group',
+    'twl_about_content_settings_capability'
+);
     'twl_register_about_content_setting'
 );
 

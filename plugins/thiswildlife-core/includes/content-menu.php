@@ -69,6 +69,18 @@ function twl_render_website_content_dashboard()
             >
                 Edit About Page
             </a>
+                        <a
+                class="button"
+                href="<?php
+                    echo esc_url(
+                        admin_url(
+                            'admin.php?page=twl-about-photos'
+                        )
+                    );
+                ?>"
+            >
+                Manage About Photos
+            </a>
         </p>
     </div>
     <?php

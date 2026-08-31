@@ -27,6 +27,9 @@ require_once plugin_dir_path(__FILE__) .
 
 require_once plugin_dir_path(__FILE__) .
     'includes/about-content.php';
+
+require_once plugin_dir_path(__FILE__) .
+    'includes/about-media.php';
 /*
  * Load the public, read-only Books REST API.
  */
