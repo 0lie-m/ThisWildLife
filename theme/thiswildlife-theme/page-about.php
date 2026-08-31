@@ -1,5 +1,12 @@
 <?php
 get_header();
+
+$about_content = twl_get_about_content();
+
+$fun_facts = preg_split(
+  '/\r\n|\r|\n/',
+  $about_content['fun_facts']
+);
 ?>
 
 <main>
@@ -28,23 +35,38 @@ get_header();
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Additional Art Pieces/IMG_1637.png" alt="">
       </div>
 
-      <h2 class="section-kicker">About the Creator</h2>
-      <h1 class="creator-name">C. Burke</h1>
+      <h2 class="section-kicker">
+        <?php
+        echo esc_html(
+          $about_content['creator_kicker']
+        );
+        ?>
+      </h2>
+
+      <h1 class="creator-name">
+        <?php
+        echo esc_html(
+          $about_content['creator_name']
+        );
+        ?>
+      </h1>
 
       <div class="creator-intro">
         <div class="creator-text">
           <p>
-            Hi there and welcome to This Wild Life! I've always loved two things:
-            spending time with animals and sharing my love of animals. After
-            working in wildlife education and exploring Ireland's wild places, I
-            wanted to find a way to share that love with children and families.
+            <?php
+            echo esc_html(
+              $about_content['intro_one']
+            );
+            ?>
           </p>
 
           <p>
-            That's how This Wild Life began— a series of books where fact and
-            imagination meet. Through the adventures of native Irish wildlife, I
-            hope to spark curiosity, bring smiles, and remind readers that
-            Ireland's animals are full of wonder.
+            <?php
+            echo esc_html(
+              $about_content['intro_two']
+            );
+            ?>
           </p>
         </div>
 
@@ -80,15 +102,34 @@ get_header();
         </div>
 
         <div class="fun-facts-content">
-          <h2>Fun Facts About Me</h2>
+          <h2>
+            <?php
+            echo esc_html(
+              $about_content['facts_heading']
+            );
+            ?>
+          </h2>
+
           <ul class="facts-list">
-            <li>Favourite Irish animal: the fox</li>
-            <li>Favourite place to explore: the Glenbeigh Fairy Forest</li>
-            <li>Animals I have worked and learned from: Turkey vultures, Hyena, Hamadryad Baboon, Common Bottlenose Dolphin, Indian Crested Porcupine, and many more</li>
-            <li>Inspiration for these books: my family and Ireland's wild landscapes</li>
-            <li>My dream: to connect the world's wildlife one story at a time ✨</li>
+            <?php
+            foreach ($fun_facts as $fact) :
+              $fact = trim($fact);
+
+              if ($fact === '') {
+                continue;
+              }
+              ?>
+              <li><?php echo esc_html($fact); ?></li>
+            <?php endforeach; ?>
           </ul>
-          <p class="facts-quote">"Big adventures, little lessons, straight from the wild."</p>
+
+          <p class="facts-quote">
+            &ldquo;<?php
+            echo esc_html(
+              $about_content['facts_quote']
+            );
+            ?>&rdquo;
+          </p>
         </div>
 
       </div>
@@ -107,7 +148,13 @@ get_header();
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Additional Art Pieces/IMG_1637.png" alt="">
       </div>
 
-      <h2 style="text-align:center;">Take a look at some of my favorite memories...</h2>
+      <h2 style="text-align:center;">
+        <?php
+        echo esc_html(
+          $about_content['memories_heading']
+        );
+        ?>
+      </h2>
 
       <div class="memories-gallery">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/about photos/22856230-3FED-4BD7-9D36-6AD96EE4C872.webp" class="gallery-img">

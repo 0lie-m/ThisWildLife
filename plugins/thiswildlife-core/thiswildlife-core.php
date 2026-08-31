@@ -22,6 +22,11 @@ require_once plugin_dir_path(__FILE__) .
 require_once plugin_dir_path(__FILE__) .
     'includes/book-visibility.php';
 
+require_once plugin_dir_path(__FILE__) .
+    'includes/content-menu.php';
+
+require_once plugin_dir_path(__FILE__) .
+    'includes/about-content.php';
 /*
  * Load the public, read-only Books REST API.
  */
