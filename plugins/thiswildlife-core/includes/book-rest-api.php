@@ -114,17 +114,17 @@ function twl_rest_get_books()
         'post_type'      => 'twl_book',
         'post_status'    => 'publish',
         'meta_query'     => [
-    'relation' => 'OR',
-    [
-        'key'     => '_twl_is_active',
-        'compare' => 'NOT EXISTS',
-    ],
-    [
-        'key'     => '_twl_is_active',
-        'value'   => '1',
-        'compare' => '=',
-    ],
-],
+            'relation' => 'OR',
+            [
+                'key'     => '_twl_is_active',
+                'compare' => 'NOT EXISTS',
+            ],
+            [
+                'key'     => '_twl_is_active',
+                'value'   => '1',
+                'compare' => '=',
+            ],
+        ],
         'posts_per_page' => 100,
         'meta_key'       => '_twl_display_order',
         'orderby'        => [
