@@ -113,6 +113,18 @@ function twl_rest_get_books()
     $query = new WP_Query([
         'post_type'      => 'twl_book',
         'post_status'    => 'publish',
+        'meta_query'     => [
+            'relation' => 'OR',
+            [
+                'key'     => '_twl_is_active',
+                'compare' => 'NOT EXISTS',
+            ],
+            [
+                'key'     => '_twl_is_active',
+                'value'   => '1',
+                'compare' => '=',
+            ],
+        ],
         'posts_per_page' => 100,
         'meta_key'       => '_twl_display_order',
         'orderby'        => [
@@ -139,10 +151,17 @@ function twl_rest_get_book($request)
     $book_id = absint($request['id']);
     $book = get_post($book_id);
 
+    $is_active = get_post_meta(
+        $book_id,
+        '_twl_is_active',
+        true
+    );
+
     if (
         !$book ||
         $book->post_type !== 'twl_book' ||
-        $book->post_status !== 'publish'
+        $book->post_status !== 'publish' ||
+        ($is_active !== '' && $is_active !== '1')
     ) {
         return new WP_Error(
             'twl_book_not_found',

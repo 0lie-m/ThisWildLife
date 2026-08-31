@@ -137,6 +137,18 @@
                         $books_query = new WP_Query([
                             'post_type'      => 'twl_book',
                             'post_status'    => 'publish',
+                                                        'meta_query'     => [
+                                'relation' => 'OR',
+                                [
+                                    'key'     => '_twl_is_active',
+                                    'compare' => 'NOT EXISTS',
+                                ],
+                                [
+                                    'key'     => '_twl_is_active',
+                                    'value'   => '1',
+                                    'compare' => '=',
+                                ],
+                            ],
                             'posts_per_page' => -1,
                             'meta_key'       => '_twl_display_order',
                             'orderby'        => [
