@@ -16,6 +16,12 @@ if (!defined('ABSPATH')) {
 require_once plugin_dir_path(__FILE__) .
     'includes/book-fields.php';
 
+require_once plugin_dir_path(__FILE__) .
+    'includes/book-admin.php';
+
+require_once plugin_dir_path(__FILE__) .
+    'includes/book-visibility.php';
+
 /*
  * Load the public, read-only Books REST API.
  */
@@ -110,6 +116,15 @@ function twl_get_book_manager_capabilities()
         'edit_published_twl_books',
         'publish_twl_books',
         'read_private_twl_books',
+    ];
+}
+
+/**
+ * Return Book deletion capabilities reserved for administrators.
+ */
+function twl_get_book_delete_capabilities()
+{
+    return [
         'delete_twl_books',
         'delete_private_twl_books',
         'delete_published_twl_books',
@@ -145,11 +160,18 @@ function twl_activate_plugin()
 
     $administrator = get_role('administrator');
 
-    if ($administrator) {
-        foreach ($book_capabilities as $capability) {
-            $administrator->add_cap($capability);
-        }
+$administrator_capabilities = array_merge(
+    $book_capabilities,
+    twl_get_book_delete_capabilities()
+);
+
+if ($administrator) {
+    foreach (
+        $administrator_capabilities as $capability
+    ) {
+        $administrator->add_cap($capability);
     }
+}
 
     twl_register_book_post_type();
     flush_rewrite_rules();
@@ -158,6 +180,35 @@ function twl_activate_plugin()
 register_activation_hook(
     __FILE__,
     'twl_activate_plugin'
+);
+/**
+ * Keep the Publisher role updated and prevent Book deletion.
+ */
+function twl_update_publisher_capabilities()
+{
+    $publisher = get_role('twl_book_manager');
+
+    if (!$publisher) {
+        return;
+    }
+
+    foreach (
+        twl_get_book_manager_capabilities() as $capability
+    ) {
+        $publisher->add_cap($capability);
+    }
+
+    foreach (
+        twl_get_book_delete_capabilities() as $capability
+    ) {
+        $publisher->remove_cap($capability);
+    }
+}
+
+add_action(
+    'init',
+    'twl_update_publisher_capabilities',
+    6
 );
 
 /**
