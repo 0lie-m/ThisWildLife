@@ -56,7 +56,18 @@ function twl_get_book_fields()
             'label'   => 'Display order',
             'type'    => 'number',
             'default' => 0,
+
         ],
+
+            'is_active' => [
+        'label'   => 'Book status',
+        'type'    => 'select',
+        'default' => '1',
+        'options' => [
+        '1' => 'Active — shown on website',
+        '0' => 'Inactive — hidden from website',
+    ],
+],
     ];
 }
 
