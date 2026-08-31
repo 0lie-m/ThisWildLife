@@ -152,10 +152,10 @@ function twl_rest_get_book($request)
     $book = get_post($book_id);
 
     $is_active = get_post_meta(
-    $book_id,
-    '_twl_is_active',
-    true
-);
+        $book_id,
+        '_twl_is_active',
+        true
+    );
 
     if (
         !$book ||
