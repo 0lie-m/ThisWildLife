@@ -134,7 +134,10 @@ function twl_register_about_content_setting()
 
 add_action(
     'admin_init',
-    /**
+    'twl_register_about_content_setting'
+);
+
+/**
  * Allow the Publisher role to save About Page settings.
  */
 function twl_about_content_settings_capability()
@@ -145,8 +148,6 @@ function twl_about_content_settings_capability()
 add_filter(
     'option_page_capability_twl_about_content_group',
     'twl_about_content_settings_capability'
-);
-    'twl_register_about_content_setting'
 );
 
 /**
