@@ -30,6 +30,10 @@ require_once plugin_dir_path(__FILE__) .
 
 require_once plugin_dir_path(__FILE__) .
     'includes/about-media.php';
+
+require_once plugin_dir_path(__FILE__) .
+    'includes/weekly-updates.php';
+
 /*
  * Load the public, read-only Books REST API.
  */
@@ -141,6 +145,36 @@ function twl_get_book_delete_capabilities()
 }
 
 /**
+ * Return the Weekly Update capabilities granted to the
+ * content manager role.
+ */
+function twl_get_update_manager_capabilities()
+{
+    return [
+        'edit_twl_updates',
+        'edit_others_twl_updates',
+        'edit_private_twl_updates',
+        'edit_published_twl_updates',
+        'publish_twl_updates',
+        'read_private_twl_updates',
+    ];
+}
+
+/**
+ * Return Weekly Update deletion capabilities reserved
+ * for administrators.
+ */
+function twl_get_update_delete_capabilities()
+{
+    return [
+        'delete_twl_updates',
+        'delete_private_twl_updates',
+        'delete_published_twl_updates',
+        'delete_others_twl_updates',
+    ];
+}
+
+/**
  * Create the publishing role and grant Book access to administrators.
  */
 function twl_activate_plugin()
@@ -157,31 +191,35 @@ function twl_activate_plugin()
         );
     }
 
-    $book_capabilities =
-        twl_get_book_manager_capabilities();
+    $content_capabilities = array_merge(
+        twl_get_book_manager_capabilities(),
+        twl_get_update_manager_capabilities()
+    );
 
     if ($publisher) {
-        foreach ($book_capabilities as $capability) {
+        foreach ($content_capabilities as $capability) {
             $publisher->add_cap($capability);
         }
     }
 
     $administrator = get_role('administrator');
 
-$administrator_capabilities = array_merge(
-    $book_capabilities,
-    twl_get_book_delete_capabilities()
-);
+    $administrator_capabilities = array_merge(
+        $content_capabilities,
+        twl_get_book_delete_capabilities(),
+        twl_get_update_delete_capabilities()
+    );
 
-if ($administrator) {
-    foreach (
-        $administrator_capabilities as $capability
-    ) {
-        $administrator->add_cap($capability);
+    if ($administrator) {
+        foreach (
+            $administrator_capabilities as $capability
+        ) {
+            $administrator->add_cap($capability);
+        }
     }
-}
 
     twl_register_book_post_type();
+    twl_register_weekly_update_post_type();
     flush_rewrite_rules();
 }
 
@@ -194,22 +232,39 @@ register_activation_hook(
  */
 function twl_update_publisher_capabilities()
 {
+    $content_capabilities = array_merge(
+        twl_get_book_manager_capabilities(),
+        twl_get_update_manager_capabilities()
+    );
+
+    $delete_capabilities = array_merge(
+        twl_get_book_delete_capabilities(),
+        twl_get_update_delete_capabilities()
+    );
+
     $publisher = get_role('twl_book_manager');
 
-    if (!$publisher) {
-        return;
+    if ($publisher) {
+        foreach ($content_capabilities as $capability) {
+            $publisher->add_cap($capability);
+        }
+
+        foreach ($delete_capabilities as $capability) {
+            $publisher->remove_cap($capability);
+        }
     }
 
-    foreach (
-        twl_get_book_manager_capabilities() as $capability
-    ) {
-        $publisher->add_cap($capability);
-    }
+    $administrator = get_role('administrator');
 
-    foreach (
-        twl_get_book_delete_capabilities() as $capability
-    ) {
-        $publisher->remove_cap($capability);
+    if ($administrator) {
+        foreach (
+            array_merge(
+                $content_capabilities,
+                $delete_capabilities
+            ) as $capability
+        ) {
+            $administrator->add_cap($capability);
+        }
     }
 }
 
